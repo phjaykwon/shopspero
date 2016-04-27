@@ -1,9 +1,7 @@
 
 <template name="product">
     <div class = "container">
-        <div class = "page-header">
-           	<p class="text-center"><h3>{{ name }}</h3></p>
-        </div>
+           	
         <div class="row">
             <div class="col-sm-4">
 
@@ -17,24 +15,42 @@
                 </div>
             </div>
             <div class="col-sm-8">
+                <div class = "row">
+                    <div class ="col-sm-10">
+                        <h2>{{ name }} </h2>
+                    </div>
+                </div>
+                <div class = "row">
+                    <div class="col-sm-5">
+                        <h4>Price: ${{ price }}</h4>
+                    </div>
+                    <div class="col-sm-7">
+                        <h4>Shipping Details - {{shippingNotes}} </h4>
+                    </div>
+                </div>
+                 
                 {{ description }}
             </div>
         </div>
 
-        <form class="add-cart">
-            <label for="sizes">In Stock </label>
-            <select class="form-control" id="size-select" name="newSize">         
-                    <option value="Medium">M</option>
-                    <option value="Large">L</option>
-            </select>
-            <select class="form-control" id="quantity-select" name="newQuantity">          
-                    <option value="1">1</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-            </select>
+        <div class="row"> <div class="col-sm-2">
+            <form class="add-cart">
+                <label for="sizes">In Stock </label>
+                <select class="form-control" id="size-select" name="newSize">
+                    {{#each sizes}}
+                        <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+                <select class="form-control" id="quantity-select" name="newQuantity">
+                    {{#each quantity}}
+                        <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
 
-            <button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-shopping-cart"></span>  Add to Cart</button>
-        </form>
+                <button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-shopping-cart"></span>  Add to Cart</button>
+            </form>
+        </div> <div class="col-sm-10"> </div>
+        </div>
 
     </div>
 </template>
@@ -46,4 +62,7 @@
             <img src="{{c.url this}}" class="btn btn-default btn-sm alt-img">
         </div>
     </div>
+</template>
+
+<template name="selOption">
 </template>

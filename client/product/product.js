@@ -1,12 +1,3 @@
-// Template.product.onCreated(function() {
-//     console.log("product page")
-//     var initImg = Session.get('photos')[0];
-
-//     Session.set({
-//         'mainImg': initImg
-//     })
-// })
-
 Template.product.onCreated(function() {
 
     Session.setPersistent('mainImage', "") //add check if photo even exists TODO
@@ -14,26 +5,55 @@ Template.product.onCreated(function() {
 
 Template.product.helpers({
     sizes: function() {
+        var selects = []
+        var inventory = this.sizes
 
+        console.log(inventory) // { "S": 1, "XS": 2}
+        for (var key in inventory) {
+            if (inventory.hasOwnProperty(key)) {
+                console.log(key + " -> " + inventory[key]);
+                if (inventory[key] > 0) {
+                    selects.push(key)
+                }
 
-        console.log(this.sizes) // { "S": 1, "XS": 2}
-        return ['XS', 'S', 'M', 'L', 'XL']
+            }
+        }
+
+        console.log(selects)
+        return selects
+    },
+    quantity: function() {
+        var size = Session.get("selectedSize")
+        var inventory = Template.currentData().sizes
+        if (!size) {
+            for (var key in inventory) {
+                if (inventory.hasOwnProperty(key)) {
+                    console.log(key + " -> " + inventory[key]);
+                    if (inventory[key] > 0) {
+                        size = key
+                        break
+                    }
+                }
+            }            
+        }
+        console.log(inventory[size])
+        return _.range(1, inventory[size] + 1)
     },
     mainImage: function() {
         if (Session.get('mainImage') == "") {
-            Session.setPersistent('mainImage', this.photos[0]); //add check TODO
+            console.log('finding mainImage')
+            console.log(this.photos)
+            Session.setPersistent('mainImage', this.photos[0].toString()); //add check TODO
         } 
         return Session.get('mainImage')
     }
 })
 Template.product.events({
     "click .alt-img": function(event) {
-        console.log("old")
-        console.log(Session.get('mainImage'))
-        console.log('new')
-        console.log(this.toString())
-
         Session.setPersistent('mainImage', this.toString())
+    },
+    "change #size-select": function(evt) {
+        Session.set("selectedSize", $(evt.target).val())
     }
 })
 
