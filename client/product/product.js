@@ -22,6 +22,21 @@ Template.product.helpers({
         console.log(selects)
         return selects
     },
+    categoryName: function() {
+        var categoryName = Template.currentData().sex || Template.currentData().category
+        console.log(categoryName.toString())
+        categoryName = categoryName.toString()
+        categoryName = categoryName.charAt(0).toUpperCase() + categoryName.slice(1)
+        return categoryName
+    },
+    subcategoryName: function() {
+        subcategories = Template.currentData().subcategories
+        for (var key in subcategories) {
+            if (subcategories[key]) {
+                return " / " + key.charAt(0).toUpperCase() + key.slice(1)
+            }
+        }
+    },
     quantity: function() {
         var size = Session.get("selectedSize")
         var inventory = Template.currentData().sizes
