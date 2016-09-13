@@ -1,5 +1,6 @@
 # shopspero
 A Meteor.JS app for shop-spero.com
+testing
 
 
 ## JS Best Practices/Documentation/Commenting
